@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cuenta de Ahorros - Modo Oscuro</title>
+  <!-- Bootstrap Icons para los íconos -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: #000;
+      color: #fff;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .phone {
+      width: 390px;
+      height: 800px;
+      background: #111;
+      border-radius: 28px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Barra superior (hora e iconos) */
+    .status-bar {
+      height: 28px;
+      padding: 0 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #aaa;
+      font-size: 12px;
+    }
+    .status-icons i {
+      margin-left: 8px;
+    }
+    /* Cabecera: volver, logo y placeholder */
+    .top-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      position: relative;
+      color: #fff;
+    }
+    .top-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+    }
+    .top-left i {
+      font-size: 16px;
+    }
+    .top-logo {
+      position: absolute;
+      left: 50%;
+      top: 90%;
+      transform: translate(-50%, -50%);
+    }
+    .top-logo img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+    /* Información de la cuenta */
+    .account-info {
+      padding: 4px 16px 8px;
+    }
+    .account-info small {
+      color: #888;
+      font-size: 12px;
+    }
+    .account-info h2 {
+      margin-top: 4px;
+      font-size: 24px;
+      font-weight: 600;
+    }
+    .account-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+    }
+    .account-left, .account-right {
+      display: flex;
+      flex-direction: column;
+    }
+    .account-left small,
+    .account-right small {
+      color: #888;
+      font-size: 12px;
+    }
+    .account-left span {
+      margin-top: 2px;
+      font-size: 14px;
+    }
+    .account-right span.balance {
+      margin-top: 2px;
+      font-size: 20px;
+      font-weight: 600;
+    }
+    .account-right span.balance small {
+      font-size: 14px;
+      font-weight: 500;
+    }
+    /* Pestañas */
+    .tabs {
+      display: flex;
+      border-top: 1px solid #222;
+      border-bottom: 1px solid #222;
+    }
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 10px 0;
+      font-size: 14px;
+      color: #777;
+      position: relative;
+    }
+    .tab.active {
+      color: #fff;
+      font-weight: 500;
+    }
+    .tab.active::after {
+      content: "";
+      position: absolute;
+      left: 20%;
+      right: 20%;
+      bottom: 0;
+      height: 2px;
+      background: #fff;
+      border-radius: 2px;
+    }
+    /* Contenido de movimientos */
+    .content {
+      flex: 1;
+      background: #101010;
+      padding: 12px 0;
+      position: relative;
+      overflow-y: auto;
+    }
+    /* Botón flotante de búsqueda */
+    .search-btn {
+      position: absolute;
+      right: 16px;
+      top: 12px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #2a2a2a;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+    }
+    .search-btn i {
+      color: #bbb;
+      font-size: 20px;
+    }
+    /* Lista de movimientos */
+    .movement-list {
+      margin-top: 58px;
+      padding: 0 16px;
+    }
+    .movement-item {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #222;
+      padding: 12px 0;
+    }
+    .movement-date {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+    .movement-desc {
+      font-size: 14px;
+      color: #ddd;
+    }
+    .movement-amount {
+      font-size: 16px;
+      font-weight: 600;
+      color: #32b34a;
+    }
+    .movement-amount span.currency {
+      font-size: 12px;
+      color: #888;
+      margin-right: 4px;
+    }
+    /* Mensaje de no hay más movimientos */
+    .no-more {
+      text-align: center;
+      padding: 32px 16px;
+      color: #888;
+      font-size: 14px;
+    }
+    .no-more i {
+      display: block;
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    /* Barra inferior con indicador de gesto */
+    .bottom-bar {
+      position: relative;
+      padding-bottom: 0;
+    }
+    .gesture-bar {
+      width: 90px;
+      height: 4px;
+      border-radius: 2px;
+      background: #666;
+      margin: 6px auto;
+    }
+    .bottom-nav {
+      height: 64px;
+      background: #1a1a1a;
+      border-top: 1px solid #222;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #bbb;
+      font-size: 12px;
+    }
+    .nav-item i {
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone">
+
+    <!-- Cabecera -->
+    <div class="top-header">
+      <div class="top-left">
+        <i class="bi bi-chevron-left"></i>
+        <span>Volver</span>
+      </div>
+      <div class="top-logo">
+        <!-- Aquí utilizamos el SVG del logo en blanco -->
+        <img src="bancol.svg" alt="Banco Logo">
+      </div>
+      <div class="top-right"></div>
+    </div>
+    <!-- Información de la cuenta -->
+    <div class="account-info">
+      <small>Cuentas</small>
+      <h2>Cuenta de Ahorros</h2>
+      <div class="account-row">
+        <div class="account-left">
+          <small>Ahorros</small>
+          <span>114 - 043843 - 01</span>
+        </div>
+        <div class="account-right" style="text-align: right;">
+          <small>Saldo disponible</small>
+          <span class="balance">$138,<small>29</small></span>
+        </div>
+      </div>
+    </div>
+    <!-- Pestañas -->
+    <div class="tabs">
+      <div class="tab">Detalles</div>
+      <div class="tab active">Movimientos</div>
+      <div class="tab">Plan</div>
+    </div>
+    <!-- Contenido -->
+    <div class="content">
+      <button class="search-btn"><i class="bi bi-search"></i></button>
+      <div class="movement-list">
+        <div class="movement-item">
+          <div>
+            <div class="movement-date">21 nov 2025</div>
+            <div class="movement-desc">DEV CUOTA MANEJO TARJ DEB</div>
+          </div>
+          <div class="movement-amount"><span class="currency">COP</span>$137,42</div>
+        </div>
+        <div class="movement-item">
+          <div>
+            <div class="movement-date">18 nov 2025</div>
+            <div class="movement-desc">CONSIGNACIÓN EN CANJE</div>
+          </div>
+          <div class="movement-amount"><span class="currency">COP</span>$21.174.429,73</div>
+        </div>
+        <div class="movement-item">
+          <div>
+            <div class="movement-date">17 nov 2025</div>
+            <div class="movement-desc">ABONO INTERESES AHORROS</div>
+          </div>
+          <div class="movement-amount"><span class="currency">COP</span>$0,43</div>
+        </div>
+        <div class="movement-item">
+          <div>
+            <div class="movement-date">17 sep 2025</div>
+            <div class="movement-desc">TRANSF QR NEQUI</div>
+          </div>
+          <div class="movement-amount"><span class="currency">COP</span>$60.000,00</div>
+        </div>
+      </div>
+      <div class="no-more">
+        <i class="bi bi-chevron-down"></i>
+        No tienes más movimientos
+      </div>
+    </div>
+    <!-- Barra inferior -->
+    <div class="bottom-bar">
+      <div class="gesture-bar"></div>
+      <div class="bottom-nav">
+        <div class="nav-item">
+          <i class="bi bi-arrow-left-right"></i>
+          <span>Transferir plata</span>
+        </div>
+        <div class="nav-item">
+          <i class="bi bi-hand-index-thumb"></i>
+          <span>Ir a Día a Día</span>
+        </div>
+        <div class="nav-item">
+          <i class="bi bi-three-dots-vertical"></i>
+          <span>Más</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

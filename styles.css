@@ -1,0 +1,121 @@
+body {
+  background-color: #fff;
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Encabezado con logo */
+.account-header {
+  padding: 1rem 1rem 0.5rem;
+  text-align: center;
+}
+
+.account-header img {
+  height: 32px;
+}
+
+/* Títulos y subtítulos */
+.account-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.account-subtitle {
+  font-size: 0.9rem;
+}
+
+.balance {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+/* Lista de movimientos */
+.movements-list {
+  padding: 1rem;
+  padding-bottom: 4.5rem; /* Espacio para barra inferior */
+}
+
+.movement-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.movement-item:last-child {
+  border-bottom: none;
+}
+
+.movement-desc {
+  font-size: 0.9rem;
+  margin-right: 0.5rem;
+}
+
+.movement-amount {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* Botón flotante de búsqueda */
+.float-button {
+  position: absolute;
+  right: 1rem;
+  top: -20px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.float-button i {
+  font-size: 1.2rem;
+  color: #000;
+}
+
+/* Estilos de pestañas */
+.nav-tabs .nav-link {
+  color: #6c757d;
+}
+
+.nav-tabs .nav-link.active {
+  color: #000;
+  border-color: #dee2e6 #dee2e6 #fff;
+}
+
+/* Barra inferior fija */
+.bottom-nav {
+  background-color: #fff;
+  border-top: 1px solid #dee2e6;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.6rem 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.bottom-nav a {
+  text-decoration: none;
+  color: #495057;
+  text-align: center;
+  flex: 1;
+}
+
+.bottom-nav a .bi {
+  font-size: 1.4rem;
+  display: block;
+}
+
+.bottom-nav a span {
+  font-size: 0.75rem;
+  display: block;
+}
